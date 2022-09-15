@@ -4,7 +4,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RandomUserResponse(
-//    var results: List<String>
+    var results: List<User>,
     var info: RandomUserInfo
 )
 
