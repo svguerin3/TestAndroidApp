@@ -2,6 +2,7 @@ package com.example.testapplication
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -39,11 +40,15 @@ class MainActivity : ComponentActivity() {
                 call: Call<RandomUserResponse>,
                 response: Response<RandomUserResponse>
             ) {
-                Log.d("SVG", "SUCCESS")
+                // TODO: Implement UI
             }
 
             override fun onFailure(call: Call<RandomUserResponse>, t: Throwable) {
-                Log.d("SVG", "ERROR")
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.data_fetch_error),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
     }
