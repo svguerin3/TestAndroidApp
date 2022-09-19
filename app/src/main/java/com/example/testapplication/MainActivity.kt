@@ -7,8 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.testapplication.api.Api
+import com.example.testapplication.api.entity.RandomUserInfo
 import com.example.testapplication.api.entity.RandomUserResponse
+import com.example.testapplication.api.entity.User
 import com.example.testapplication.databinding.ActivityMainBinding
 import com.example.testapplication.network.NetworkService
 import retrofit2.Call
@@ -40,7 +43,9 @@ class MainActivity : ComponentActivity() {
                 call: Call<RandomUserResponse>,
                 response: Response<RandomUserResponse>
             ) {
-                // TODO: Implement UI
+                response.body()?.let {
+                    setupUserUi(it.results.first())
+                }
             }
 
             override fun onFailure(call: Call<RandomUserResponse>, t: Throwable) {
@@ -51,6 +56,16 @@ class MainActivity : ComponentActivity() {
                 ).show()
             }
         })
+    }
+
+    private fun setupUserUi(user: User) {
+        Glide.with(this)
+            .load(user.picture.large)
+            .centerCrop()
+            .into(binding.userImage)
+
+        binding.username.text = user.login.username
+        binding.name.text = "${user.name.first} ${user.name.last}"
     }
 
     @Composable
